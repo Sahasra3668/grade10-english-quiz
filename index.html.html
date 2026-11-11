@@ -5,144 +5,131 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Grade 10 English – Connectors Quiz</title>
 <style>
-:root{--navy:#183153;--blue:#2864a5;--pale:#eef5ff;--ink:#243247;--green:#16834a;--red:#c0392b}
-*{box-sizing:border-box}
-body{margin:0;background:linear-gradient(135deg,#eaf2ff,#f8fbff);font-family:Arial,sans-serif;color:var(--ink);line-height:1.5}
-.wrap{max-width:850px;margin:28px auto;padding:18px}
-.card{background:#fff;border-radius:18px;padding:clamp(18px,4vw,34px);box-shadow:0 10px 30px #19385a18}
-h1{color:var(--navy);margin:0 0 6px;font-size:clamp(1.5rem,4vw,2rem)}
-.sub{color:#5b6b80;margin-top:0}
-.pill{display:inline-block;background:var(--pale);color:var(--blue);padding:6px 12px;border-radius:30px;font-weight:bold;font-size:.9rem}
-label{display:block;font-weight:bold;margin:15px 0 6px}
-input[type=text],select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font-size:1rem}
-button{border:0;border-radius:10px;padding:12px 20px;font-size:1rem;font-weight:bold;cursor:pointer}
-.primary{background:var(--blue);color:white}.primary:disabled{opacity:.55;cursor:not-allowed}
-.question{padding:16px;margin:15px 0;border:1px solid #e0e8f2;border-radius:12px;background:#fcfdff}
-.question p{margin:0 0 10px;font-weight:bold}
-.option{display:flex;gap:9px;align-items:flex-start;padding:7px 4px;font-weight:normal;cursor:pointer}
-.option input{margin-top:4px}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0}
-#timer{font-size:1.15rem;font-weight:bold;color:var(--red);background:#fff0ee;padding:8px 13px;border-radius:9px}
-.hidden{display:none!important}
-.feedback{padding:14px;border-radius:10px;margin:12px 0}
-.good{background:#eaf8ef;color:#145c34}.bad{background:#fff0ee;color:#8e2b21}.neutral{background:#eef5ff;color:#214f82}
-.review-item{padding:13px 0;border-bottom:1px solid #e5eaf0}
-.correct{color:var(--green);font-weight:bold}.incorrect{color:var(--red);font-weight:bold}
-.small{font-size:.9rem;color:#5b6b80}
-footer{text-align:center;color:#6b7788;font-size:.85rem;margin:18px}
+  *{box-sizing:border-box}
+  body{font-family:Arial,sans-serif;background:#f2f6ff;color:#24324a;margin:0;padding:18px}
+  .container{max-width:850px;margin:20px auto;background:white;padding:24px;border-radius:16px;box-shadow:0 5px 22px #1b3b6b18}
+  h1{color:#234b91;margin-top:0}
+  .intro{color:#52627a;line-height:1.5}
+  label{display:block;font-weight:bold;margin:14px 0 6px}
+  input[type=text],input[type=number]{width:100%;padding:12px;border:1px solid #bdc9dc;border-radius:8px;font-size:16px}
+  .question{padding:15px;margin:14px 0;background:#f7f9fd;border:1px solid #e1e8f3;border-radius:10px}
+  .question p{margin:0 0 10px;font-weight:bold}
+  .option{display:block;font-weight:normal;margin:8px 0;line-height:1.4}
+  button{background:#2457a6;color:white;border:0;padding:13px 20px;border-radius:9px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:14px}
+  button:disabled{opacity:.5}
+  #timer{font-weight:bold;color:#b42318;font-size:19px}
+  #result{margin-top:20px;padding:16px;background:#eef7ef;border-radius:10px;display:none}
+  .correct{color:#16733b}.wrong{color:#b42318}
+  .review-item{padding:10px 0;border-bottom:1px solid #d9e2ee}
+  .small{font-size:13px;color:#65738a}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <section class="card" id="intro">
-    <span class="pill">GRADE 10 · ENGLISH GRAMMAR</span>
-    <h1>Connectors & Linking Words Quiz</h1>
-    <p class="sub">Choose the best answer for each sentence. You have <strong>5 minutes</strong> to complete 20 questions.</p>
-    <label for="studentName">Student's name</label>
-    <input id="studentName" type="text" maxlength="80" placeholder="Enter your full name" autocomplete="name" required>
+<div class="container">
+  <h1>Grade 10 English – Connectors Quiz</h1>
+  <p class="intro">Choose the best connector to complete each sentence. You have <strong>5 minutes</strong> to answer 20 questions.</p>
+
+  <form id="quizForm">
+    <label for="studentName">Student name</label>
+    <input id="studentName" name="Student name" type="text" required placeholder="Enter your full name">
     <label for="grade">Grade</label>
-    <select id="grade" required>
-      <option value="">Select your grade</option>
-      <option>Grade 10 - A</option><option>Grade 10 - B</option><option>Grade 10 - C</option>
-      <option>Grade 10 - D</option><option>Grade 10 - Other</option>
-    </select>
-    <p class="small">Your answers will be submitted to your teacher when you finish or when the timer ends.</p>
-    <button class="primary" id="startBtn">Start quiz</button>
-    <p class="small" id="startError" role="alert"></p>
-  </section>
+    <input id="grade" name="Grade" type="text" required placeholder="e.g. 10 A">
+    <p>Time remaining: <span id="timer">05:00</span></p>
+    <div id="questions"></div>
+    <button id="submitBtn" type="submit">Submit answers</button>
+  </form>
 
-  <section class="card hidden" id="quiz">
-    <div class="topbar"><div><strong id="studentLabel"></strong><div class="small">Answer all 20 questions.</div></div><div id="timer" aria-live="polite">05:00</div></div>
-    <form id="quizForm">
-      <div id="questions"></div>
-      <button class="primary" id="submitBtn" type="submit">Submit answers</button>
-    </form>
-  </section>
-
-  <section class="card hidden" id="results">
-    <span class="pill">QUIZ SUMMARY</span>
-    <h1>Your results</h1>
-    <div id="summary" class="feedback neutral"></div>
-    <div id="emailStatus" class="feedback neutral" role="status"></div>
-    <h2>Answer review</h2>
-    <div id="review"></div>
-    <p class="small">Please show this result to your teacher if the email submission could not be completed.</p>
-    <button class="primary" onclick="window.location.reload()">Finish</button>
-  </section>
-  <footer>Grade 10 English Practice · Connectors and linking words</footer>
+  <div id="result" aria-live="polite"></div>
+  <p class="small">Your result is sent to your teacher by email after the form has been activated.</p>
 </div>
 <script>
-const EMAIL_ENDPOINT = "https://formsubmit.co/ajax/sahasrarajaguru2000@gmail.com";
 const questions = [
- {q:"I have not finished my homework ______.",o:["already","yet","still","ever"],a:1,e:"Use 'yet' in negative sentences and questions about something expected."},
- {q:"______ the heavy rain, the match continued.",o:["Although","Despite","However","Because"],a:1,e:"'Despite' is followed by a noun phrase or an -ing form."},
- {q:"______ she was tired, she completed the assignment.",o:["Despite","In spite of","Although","However"],a:2,e:"'Although' is followed by a subject and a verb."},
- {q:"It was very cold. ______, we went for a walk.",o:["Because","However","Unless","While"],a:1,e:"'However' links contrasting ideas, usually between sentences."},
- {q:"______ his illness, he attended the meeting.",o:["Although","In spite of","However","When"],a:1,e:"'In spite of' is followed by a noun phrase or an -ing form."},
- {q:"The players stood ______ the opposing team.",o:["against","until","during","unless"],a:0,e:"'Against' can express opposition."},
- {q:"My sister was reading ______ I was cooking.",o:["until","while","unless","yet"],a:1,e:"'While' can show two actions happening at the same time."},
- {q:"Call me ______ you reach home.",o:["when","unless","despite","however"],a:0,e:"'When' introduces the time of an action."},
- {q:"Please wait here ______ the teacher arrives.",o:["although","until","despite","against"],a:1,e:"'Until' means up to the time when something happens."},
- {q:"You will miss the bus ______ you hurry.",o:["if","unless","although","while"],a:1,e:"'Unless' means 'if not'."},
- {q:"We stayed indoors ______ it was raining heavily.",o:["because","although","yet","against"],a:0,e:"'Because' gives a reason."},
- {q:"I wanted to play; ______, I had to study.",o:["therefore","however","because","unless"],a:1,e:"'However' introduces a contrast."},
- {q:"She studied hard, ______ she passed the examination.",o:["so","but","although","unless"],a:0,e:"'So' introduces a result."},
- {q:"He is poor, ______ he is honest.",o:["because","but","therefore","unless"],a:1,e:"'But' joins contrasting ideas."},
- {q:"We cannot start ______ everyone is ready.",o:["until","despite","however","against"],a:0,e:"'Until' shows that we must wait for a condition or time."},
- {q:"______ you practise regularly, you will improve.",o:["If","Despite","However","Yet"],a:0,e:"'If' introduces a condition."},
- {q:"She wore a coat ______ it was warm outside.",o:["because","even though","therefore","until"],a:1,e:"'Even though' introduces an unexpected contrast."},
- {q:"The road was narrow. ______, the driver managed to pass.",o:["Nevertheless","Because","Unless","Since"],a:0,e:"'Nevertheless' means 'in spite of that'."},
- {q:"Wash your hands ______ you eat.",o:["before","despite","however","unless"],a:0,e:"'Before' shows that one action happens earlier than another."},
- {q:"He has lived in this town ______ 2020.",o:["for","since","until","while"],a:1,e:"Use 'since' with the starting point of a period of time."}
+ {q:"1. It was raining heavily; _____, the match continued.",o:["however","because","until","unless"],a:0,e:"However shows contrast."},
+ {q:"2. _____ she was tired, she finished her homework.",o:["Despite","Although","Because of","Until"],a:1,e:"Although is followed by a clause."},
+ {q:"3. _____ the bad weather, the trip was enjoyable.",o:["Although","Despite","However","Unless"],a:1,e:"Despite is followed by a noun phrase."},
+ {q:"4. He is poor, _____ he is honest.",o:["yet","because","until","so that"],a:0,e:"Yet expresses contrast."},
+ {q:"5. You cannot enter _____ you have a ticket.",o:["while","unless","although","despite"],a:1,e:"Unless means if not."},
+ {q:"6. Wait here _____ I return.",o:["until","despite","however","although"],a:0,e:"Until indicates up to a time."},
+ {q:"7. I was cooking _____ my sister was studying.",o:["unless","while","despite","yet"],a:1,e:"While connects two actions happening at the same time."},
+ {q:"8. Call me _____ you reach home.",o:["when","despite","however","unless"],a:0,e:"When refers to the time something happens."},
+ {q:"9. _____ being young, she is very responsible.",o:["Although","Despite","However","Unless"],a:1,e:"Despite is followed by a gerund phrase."},
+ {q:"10. He studied hard. _____, he did not pass the examination.",o:["Therefore","However","Because","Until"],a:1,e:"However introduces a contrasting idea."},
+ {q:"11. The road was closed _____ an accident.",o:["because of","although","yet","while"],a:0,e:"Because of is followed by a noun phrase."},
+ {q:"12. _____ you practise regularly, you will improve.",o:["If","Despite","However","Until"],a:0,e:"If introduces a condition."},
+ {q:"13. She took an umbrella _____ it was raining.",o:["because","although","unless","yet"],a:0,e:"Because gives a reason."},
+ {q:"14. He is friendly _____ his brother is rather quiet.",o:["while","until","despite","unless"],a:0,e:"While can show a contrast between two facts."},
+ {q:"15. The team played well _____ they lost the game.",o:["because","although","until","unless"],a:1,e:"Although introduces an unexpected contrast."},
+ {q:"16. You must finish your work _____ you go outside.",o:["before","despite","however","yet"],a:0,e:"Before indicates that one action happens earlier."},
+ {q:"17. _____ the heavy traffic, we arrived on time.",o:["In spite of","Although","Because","Unless"],a:0,e:"In spite of is followed by a noun phrase."},
+ {q:"18. She saved money _____ she could buy a bicycle.",o:["so that","although","despite","while"],a:0,e:"So that expresses purpose."},
+ {q:"19. The teacher was absent; _____, the lesson was conducted by another teacher.",o:["therefore","although","unless","despite"],a:0,e:"Therefore shows a result."},
+ {q:"20. He continued working _____ he was feeling unwell.",o:["even though","because of","until","so"],a:0,e:"Even though introduces a contrasting fact."}
 ];
-let remaining=300, timerId=null, startedAt=null, submitted=false, studentName="", grade="";
-const $=id=>document.getElementById(id);
-function renderQuestions(){
- $("questions").innerHTML=questions.map((q,i)=>`<div class="question"><p>${i+1}. ${q.q}</p>${q.o.map((opt,j)=>`<label class="option"><input type="radio" name="q${i}" value="${j}"><span>${String.fromCharCode(65+j)}. ${opt}</span></label>`).join("")}</div>`).join("");
-}
-function startQuiz(){
- studentName=$("studentName").value.trim(); grade=$("grade").value;
- if(!studentName||!grade){$("startError").textContent="Please enter your name and select your grade.";return;}
- $("startError").textContent=""; $("studentLabel").textContent=studentName+" · "+grade;
- $("intro").classList.add("hidden"); $("quiz").classList.remove("hidden");
- renderQuestions(); startedAt=new Date(); timerId=setInterval(tick,1000); tick();
-}
-function tick(){
- const m=String(Math.floor(remaining/60)).padStart(2,"0"),s=String(remaining%60).padStart(2,"0");
- $("timer").textContent=m+":"+s;
- if(remaining<=0){clearInterval(timerId);finishQuiz(true);return;} remaining--;
-}
-function finishQuiz(timeUp){
- if(submitted)return; submitted=true; clearInterval(timerId);
- $("quiz").classList.add("hidden"); $("results").classList.remove("hidden");
- $("submitBtn").disabled=true;
- const answers=questions.map((q,i)=>{const chosen=document.querySelector(`input[name="q${i}"]:checked`);return chosen?Number(chosen.value):-1;});
- const score=answers.reduce((n,a,i)=>n+(a===questions[i].a?1:0),0);
+const form=document.getElementById('quizForm');
+const holder=document.getElementById('questions');
+questions.forEach((item,i)=>{
+ const div=document.createElement('div'); div.className='question';
+ const p=document.createElement('p'); p.textContent=item.q; div.appendChild(p);
+ item.o.forEach((option,j)=>{
+   const lab=document.createElement('label'); lab.className='option';
+   const radio=document.createElement('input'); radio.type='radio'; radio.name='q'+i; radio.value=j; radio.required=true;
+   lab.appendChild(radio); lab.append(' '+option); div.appendChild(lab);
+ });
+ holder.appendChild(div);
+});
+let remaining=300, submitted=false;
+const timer=document.getElementById('timer');
+const interval=setInterval(()=>{
+ if(submitted)return;
+ remaining--;
+ const m=String(Math.floor(remaining/60)).padStart(2,'0');
+ const s=String(remaining%60).padStart(2,'0');
+ timer.textContent=m+':'+s;
+ if(remaining<=0){clearInterval(interval);form.requestSubmit();}
+},1000);
+
+form.addEventListener('submit', async (event)=>{
+ event.preventDefault();
+ if(submitted)return;
+ if(!form.reportValidity())return;
+ submitted=true; clearInterval(interval);
+ document.getElementById('submitBtn').disabled=true;
+ let score=0, details=[];
+ questions.forEach((item,i)=>{
+   const selected=form.querySelector('input[name="q'+i+'"]:checked');
+   const chosen=selected?Number(selected.value):-1;
+   const ok=chosen===item.a; if(ok)score++;
+   details.push((i+1)+'. '+item.q+'\nStudent answer: '+(chosen>=0?item.o[chosen]:'Not answered')+'\nCorrect answer: '+item.o[item.a]+'\n'+(ok?'Correct':'Incorrect')+' — '+item.e);
+ });
+ const name=document.getElementById('studentName').value.trim();
+ const grade=document.getElementById('grade').value.trim();
  const percent=Math.round(score/questions.length*100);
- const duration=Math.min(300,Math.round((new Date()-startedAt)/1000));
- $("summary").innerHTML=`<strong>${escapeHtml(studentName)}</strong> · ${escapeHtml(grade)}<br><strong>Score: ${score} / 20 (${percent}%)</strong><br>${timeUp?"Time is up. ":""}${score>=16?"Excellent work!":score>=10?"Good effort. Keep practising!":"Keep learning and try again!"}<br><span class="small">Time used: ${Math.floor(duration/60)} min ${duration%60} sec</span>`;
- $("review").innerHTML=questions.map((q,i)=>{const ok=answers[i]===q.a;return `<div class="review-item"><strong>${i+1}. ${q.q}</strong><br><span class="${ok?"correct":"incorrect"}">${ok?"Correct":"Incorrect / not answered"}</span> · Your answer: ${answers[i]<0?"No answer":escapeHtml(q.o[answers[i]])}<br><span class="correct">Correct answer: ${escapeHtml(q.o[q.a])}</span><br><span class="small">${escapeHtml(q.e)}</span></div>`}).join("");
- sendResults(answers,score,percent,duration,timeUp);
-}
-function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-async function sendResults(answers,score,percent,duration,timeUp){
- $("emailStatus").textContent="Sending your results to your teacher…";
- const detail=questions.map((q,i)=>`${i+1}. ${q.q}\nStudent answer: ${answers[i]<0?"Not answered":q.o[answers[i]]}\nCorrect answer: ${q.o[q.a]}\nResult: ${answers[i]===q.a?"Correct":"Incorrect"}`).join("\n\n");
- const data={_subject:`Grade 10 English Quiz: ${studentName} (${score}/20)`,_template:"table",Student:studentName,Grade:grade,Score:`${score}/20 (${percent}%)`,Time_used_seconds:duration,Time_expired:timeUp?"Yes":"No",Submitted_at:new Date().toLocaleString(),Answers:detail};
+ const report='Student: '+name+'\nGrade: '+grade+'\nScore: '+score+'/20 ('+percent+'%)\n\n'+details.join('\n\n');
+ const result=document.getElementById('result');
+ result.style.display='block';
+ result.innerHTML='<h2>Quiz result</h2><p><strong>'+score+' / 20 ('+percent+'%)</strong></p><h3>Answer review</h3>'+details.map((d,i)=>'<div class="review-item"><strong>'+questions[i].q+'</strong><br>Your answer: '+(form.querySelector('input[name="q'+i+'"]:checked')?questions[i].o[Number(form.querySelector('input[name="q'+i+'"]:checked').value)]:'Not answered')+'<br>Correct answer: <span class="correct">'+questions[i].o[questions[i].a]+'</span><br><span class="'+(form.querySelector('input[name="q'+i+'"]:checked')&&Number(form.querySelector('input[name="q'+i+'"]:checked').value)===questions[i].a?'correct':'wrong')+'">'+questions[i].e+'</span></div>').join('');
+ result.scrollIntoView({behavior:'smooth'});
+ const data=new FormData();
+ data.append('_subject','Grade 10 Connectors Quiz Result');
+ data.append('_template','table');
+ data.append('_captcha','false');
+ data.append('Student name',name);
+ data.append('Grade',grade);
+ data.append('Score',score+'/20');
+ data.append('Percentage',percent+'%');
+ data.append('Full answers and review',report);
  try{
-   const response=await fetch(EMAIL_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(data)});
-   if(!response.ok)throw new Error("Email service returned "+response.status);
-   const result=await response.json();
-   if(result.success===false)throw new Error("Email service did not accept the submission");
-   $("emailStatus").textContent="Your results have been sent to your teacher successfully.";
-   $("emailStatus").className="feedback good";
+   const response=await fetch('https://formsubmit.co/ajax/sahasrarajaguru2000@gmail.com',{method:'POST',body:data,headers:{'Accept':'application/json'}});
+   if(response.ok){
+     const info=await response.json();
+     const note=document.createElement('p'); note.textContent='Your result has been submitted for email delivery.'; result.appendChild(note);
+   } else {
+     const note=document.createElement('p'); note.textContent='Your score is shown above, but the email could not be sent. Please tell your teacher.'; result.appendChild(note);
+   }
  }catch(err){
-   $("emailStatus").textContent="Your score is shown above, but automatic email delivery could not be confirmed. Please show this result to your teacher. The teacher may need to activate the email service first.";
-   $("emailStatus").className="feedback bad";
+   const note=document.createElement('p'); note.textContent='Your score is shown above, but email delivery could not be confirmed. Please tell your teacher.'; result.appendChild(note);
  }
-}
-$("startBtn").addEventListener("click",startQuiz);
-$("quizForm").addEventListener("submit",e=>{e.preventDefault();finishQuiz(false);});
+});
 </script>
 </body>
 </html>
